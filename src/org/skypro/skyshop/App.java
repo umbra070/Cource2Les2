@@ -140,11 +140,11 @@ public class App {
                 article6
         };
         SearchEngine search = new SearchEngine(searchItems.length);
-        for(Searchable s:searchItems){
+        for (Searchable s : searchItems) {
             search.add(s);
         }
-        for(Searchable s:search.search("Samsung")){
-            if(s == null){
+        for (Searchable s : search.search("Samsung")) {
+            if (s == null) {
                 continue;
             }
             System.out.println("*******************");
@@ -152,8 +152,8 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 2\n\r");
-        for(Searchable s:search.search("Кабель")){
-            if(s == null){
+        for (Searchable s : search.search("Кабель")) {
+            if (s == null) {
                 continue;
             }
             System.out.println("*******************");
@@ -161,8 +161,8 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 3\n\r");
-        for(Searchable s:search.search("890")){
-            if(s == null){
+        for (Searchable s : search.search("890")) {
+            if (s == null) {
                 continue;
             }
             System.out.println("*******************");
