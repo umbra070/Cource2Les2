@@ -1,24 +1,24 @@
 
 
 package org.skypro.skyshop.product;
+
 //Модель, описывающая продукт
-public class Product {
+public abstract class Product {
     private String productName = "";
-    private int productCoast;
 
     public Product() {
 
     }
-    public Product(String productName, int productCoast){
+
+    public Product(String productName) {
         this.productName = productName;
-        this.productCoast = productCoast;
     }
 
-    public int getProductCoast() {
-        return productCoast;
-    }
+    public abstract int getProductPrice();
 
     public String getProductName() {
         return productName;
     }
+
+    public abstract boolean isSpecial();
 }
