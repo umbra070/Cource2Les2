@@ -63,17 +63,19 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.DiscountProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();
-        Product product1 = new Product("Samsung Galaxy S22+", 50000);
-        Product product2 = new Product("Чехол для Samsung Galaxy S22+", 5000);
-        Product product3 = new Product("Беспроводное зарядное устройство Samsung BXH2890", 4900);
-        Product product4 = new Product("Кабель USB Type-A USB Type-C 3.1", 890);
-        Product product5 = new Product("Набор беспроводной клавиатура + мышь Logitech CPD3918", 7000);
-        Product product6 = new Product("IPhone 16+", 90000);
+        SimpleProduct product1 = new SimpleProduct("Samsung Galaxy S22+", 50000);
+        DiscountProduct product2 = new DiscountProduct("Чехол для Samsung Galaxy S22+", 5000, 40);
+        FixPriceProduct product3 = new FixPriceProduct("Беспроводное зарядное устройство Samsung BXH2890");
+        SimpleProduct product4 = new SimpleProduct("Кабель USB Type-A USB Type-C 3.1", 890);
+        SimpleProduct product5 = new SimpleProduct("Набор беспроводной клавиатура + мышь Logitech CPD3918", 7000);
+        SimpleProduct product6 = new SimpleProduct("IPhone 16+", 90000);
         basket.addProductToBasket(product1);
         basket.addProductToBasket(product2);
         basket.addProductToBasket(product3);
