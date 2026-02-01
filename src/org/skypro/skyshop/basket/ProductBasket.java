@@ -18,7 +18,7 @@ public class ProductBasket {
         for (int i = 0; i < basket.length; i++) {
             if (basket[i] == null) {
                 basket[i] = product;
-                System.out.println(String.format("Товар %s добавлен в корзину", product.getProductName()));
+                //System.out.println(String.format("Товар %s добавлен в корзину", product.getProductName()));
                 break;
             }
             if (i == basket.length - 1 && basket[i] != null) {

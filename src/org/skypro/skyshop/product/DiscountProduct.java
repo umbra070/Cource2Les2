@@ -28,5 +28,4 @@ public class DiscountProduct extends Product {
     public boolean isSpecial() {
         return true;
     }
-
 }
