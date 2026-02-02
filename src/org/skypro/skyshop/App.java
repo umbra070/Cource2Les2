@@ -148,7 +148,7 @@ public class App {
                 continue;
             }
             System.out.println("*******************");
-            System.out.println(s);
+            System.out.println(s.getStringRepresentation());
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 2\n\r");
@@ -157,7 +157,7 @@ public class App {
                 continue;
             }
             System.out.println("*******************");
-            System.out.println(s);
+            System.out.println(s.getStringRepresentation());
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 3\n\r");
@@ -166,7 +166,7 @@ public class App {
                 continue;
             }
             System.out.println("*******************");
-            System.out.println(s);
+            System.out.println(s.getStringRepresentation());
             System.out.println("*******************");
         }
     }

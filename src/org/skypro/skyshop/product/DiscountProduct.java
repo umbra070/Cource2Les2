@@ -1,8 +1,8 @@
 package org.skypro.skyshop.product;
 
 public class DiscountProduct extends Product {
-    private int productPrice;
-    private int discount;
+    private final int productPrice;
+    private final int discount;
 
     public DiscountProduct(String productName, int productPrice, int discount) {
         super(productName);
@@ -16,7 +16,7 @@ public class DiscountProduct extends Product {
 
     @Override
     public String toString() {
-        return String.format("%s : %d(%d%%)", this.getProductName(), this.getProductPrice(), this.getDiscount());
+        return String.format("%s : %d(%d%%)", this.getSearchTerm(), this.getProductPrice(), this.getDiscount());
     }
 
     @Override

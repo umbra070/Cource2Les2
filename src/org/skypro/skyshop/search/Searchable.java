@@ -6,7 +6,7 @@ public interface Searchable {
 
     String getContentType();
 
-    default String getStringRepresentation(String objectName, String objectType) {
-        return String.format("%s - %s", objectName, objectType);
+    default String getStringRepresentation() {
+        return String.format("%s - %s", this.getSearchTerm(), this.getContentType());
     }
 }
