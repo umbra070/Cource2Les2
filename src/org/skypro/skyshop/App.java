@@ -80,6 +80,66 @@ public class App {
         SimpleProduct product4 = new SimpleProduct("Кабель USB Type-A USB Type-C 3.1", 890);
         SimpleProduct product5 = new SimpleProduct("Набор беспроводной клавиатура + мышь Logitech CPD3918", 7000);
         SimpleProduct product6 = new SimpleProduct("IPhone 16+", 90000);
+        //***************************************
+        System.out.println("\n\r******************* Testing Exceptions\n\r");
+        ProductBasket testingBasket = new ProductBasket();
+        SimpleProduct product7 = null;
+        SimpleProduct product8 = null;
+        SimpleProduct product9 = null;
+        SimpleProduct product10 = null;
+        SimpleProduct product11 = null;
+        DiscountProduct product12 = null;
+        DiscountProduct product13 = null;
+        DiscountProduct product14 = null;
+        DiscountProduct product15 = null;
+        try {
+            product7 = new SimpleProduct("", 120000);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product8 = new SimpleProduct(null, 200000);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product9 = new SimpleProduct(" ", 500000);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product10 = new SimpleProduct("Test simplProduct10", -600);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product11 = new SimpleProduct("Test simpleProduct11", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product12 = new DiscountProduct("Test discountProduct12", 0, 90);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product13 = new DiscountProduct("Test discountProduct13", -1, 90);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product14 = new DiscountProduct("Test discountProduct14", 10, 110);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            product15 = new DiscountProduct("Test discontProduct15", 110, 200);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        System.out.println("\n\r******************* Testing Exceptions\n\r");
         Article article1 = new Article("iPhone 16 Plus: кратко о главном", "iPhone 16 Plus получил обновлённый дизайн с алюминиевой рамкой и керамическим стеклом, которое в два раза устойчивее к царапинам, чем у конкурентов.\n" +
                 "\n" +
                 "Устройство оснащено мощным процессором Apple A18 на 3 нм техпроцессе, обеспечивающим на 30 % более высокую производительность CPU и на 40 % — графического ускорителя по сравнению с предыдущим поколением.\n" +
@@ -140,6 +200,18 @@ public class App {
                 article5,
                 article6
         };
+        Searchable[] testingExceptions = new Searchable[]{
+                product7,
+                product8,
+                product9,
+                product10,
+                product11,
+                product12,
+                product13,
+                product14,
+                product15
+        };
+        SearchEngine searchWithExceptions = new SearchEngine(testingExceptions.length);
         SearchEngine search = new SearchEngine(searchItems.length);
         for (Searchable s : searchItems) {
             search.add(s);
@@ -170,10 +242,24 @@ public class App {
             System.out.println(s.getStringRepresentation());
             System.out.println("*******************");
         }
+        System.out.println("\n\rTesting search 4\n\r");
+        try {
+            for (Searchable s : searchWithExceptions.search("бздыщ")) {
+                if (s == null) {
+                    continue;
+                }
+                System.out.println("*******************");
+                System.out.println(s.getStringRepresentation());
+                System.out.println("*******************");
+            }
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+
         System.out.println("******************* тестирование одиночной выдачи");
         try {
             System.out.println(search.singleElementSearch("amsung").getStringRepresentation());
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         System.out.println("*******************");
@@ -181,7 +267,14 @@ public class App {
         System.out.println("******************* тестирование одиночной выдачи с исключением");
         try {
             System.out.println(search.singleElementSearch("жареные гвозди").getStringRepresentation());
-        }catch (BestResultNotFound e){
+        } catch (BestResultNotFound e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("*******************");
+        System.out.println("******************* тестирование одиночной выдачи с исключением 2");
+        try {
+            System.out.println(searchWithExceptions.singleElementSearch("жареные гвозди").getStringRepresentation());
+        } catch (BestResultNotFound e) {
             System.out.println(e.getMessage());
         }
         System.out.println("*******************");

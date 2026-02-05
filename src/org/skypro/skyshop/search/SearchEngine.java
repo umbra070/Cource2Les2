@@ -13,6 +13,9 @@ public class SearchEngine {
         Searchable[] searchResalt = new Searchable[10];
         int i = 0;
         for (Searchable s : searchableElements) {
+            if (s == null) {
+                throw new NullPointerException("Список объектов для поиска содержит Null");
+            }
             if (s.getSearchTerm().contains(searchString)) {
                 searchResalt[i] = s;
                 i++;
