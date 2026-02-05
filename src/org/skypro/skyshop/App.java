@@ -64,6 +64,7 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
@@ -169,5 +170,20 @@ public class App {
             System.out.println(s.getStringRepresentation());
             System.out.println("*******************");
         }
+        System.out.println("******************* тестирование одиночной выдачи");
+        try {
+            System.out.println(search.singleElementSearch("amsung").getStringRepresentation());
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("*******************");
+
+        System.out.println("******************* тестирование одиночной выдачи с исключением");
+        try {
+            System.out.println(search.singleElementSearch("жареные гвозди").getStringRepresentation());
+        }catch (BestResultNotFound e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("*******************");
     }
 }
