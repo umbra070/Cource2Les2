@@ -67,19 +67,45 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
         ProductBasket basket = new ProductBasket();
+        //Тестирование добавления в корзину
+        System.out.println("\n\r******************* Тестирование добавления в корзину\n\r");
         SimpleProduct product1 = new SimpleProduct("Samsung Galaxy S22+", 50000);
         DiscountProduct product2 = new DiscountProduct("Чехол для Samsung Galaxy S22+", 5000, 40);
         FixPriceProduct product3 = new FixPriceProduct("Беспроводное зарядное устройство Samsung BXH2890");
         SimpleProduct product4 = new SimpleProduct("Кабель USB Type-A USB Type-C 3.1", 890);
         SimpleProduct product5 = new SimpleProduct("Набор беспроводной клавиатура + мышь Logitech CPD3918", 7000);
         SimpleProduct product6 = new SimpleProduct("IPhone 16+", 90000);
+        basket.addProductToBasket(product1);
+        basket.addProductToBasket(product2);
+        basket.addProductToBasket(product3);
+        basket.addProductToBasket(product4);
+        basket.addProductToBasket(product5);
+        basket.addProductToBasket(product6);
+        basket.addProductToBasket(product4);
+        basket.printBasket();
+        System.out.println("\n\r******************* Тестирование удаления элементов\n\r");
+        List<Product> removedProducts = basket.removeProductByName("Кабель USB Type-A USB Type-C 3.1");
+        System.out.println(removedProducts.toString());
+        basket.printBasket();
+        removedProducts = basket.removeProductByName("Жареные гвозди");
+        System.out.println(removedProducts.toString());
+        if(removedProducts.isEmpty()){
+            System.out.println("Список пуст");
+        }
+        basket.printBasket();
+        System.out.println("\n\r******************* Тестирование очищения корзины\n\r");
+        basket.cleanBasket();
+        basket.printBasket();
         //***************************************
         System.out.println("\n\r******************* Testing Exceptions\n\r");
         ProductBasket testingBasket = new ProductBasket();
@@ -185,7 +211,7 @@ public class App {
         basket.getTotalBasketCoast();
         System.out.println(String.format("Товар %s есть в корзине: %s", product4.getProductName(), basket.checkProductByName(product4.getProductName())));
         //***************************************
-        System.out.println("\n\rTesting search\n\r");
+        System.out.println("\n\r******************* Testing search\n\r");
         Searchable[] searchItems = new Searchable[]{
                 product1,
                 product2,
@@ -211,8 +237,8 @@ public class App {
                 product14,
                 product15
         };
-        SearchEngine searchWithExceptions = new SearchEngine(testingExceptions.length);
-        SearchEngine search = new SearchEngine(searchItems.length);
+        SearchEngine searchWithExceptions = new SearchEngine();
+        SearchEngine search = new SearchEngine();
         for (Searchable s : searchItems) {
             search.add(s);
         }
@@ -244,7 +270,7 @@ public class App {
         }
         System.out.println("\n\rTesting search 4\n\r");
         try {
-            for (Searchable s : searchWithExceptions.search("бздыщ")) {
+            for (Searchable s : searchWithExceptions.search("жареные гвозди")) {
                 if (s == null) {
                     continue;
                 }

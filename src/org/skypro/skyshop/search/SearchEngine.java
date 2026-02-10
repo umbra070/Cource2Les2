@@ -2,38 +2,36 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
 
-public class SearchEngine {
-    Searchable[] searchableElements;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-    public SearchEngine(int searchableCount) {
-        searchableElements = new Searchable[searchableCount];
+public class SearchEngine {
+    List<Searchable> searchableElements = new ArrayList<>();
+
+    public SearchEngine() {
     }
 
-    public Searchable[] search(String searchString) {
-        Searchable[] searchResalt = new Searchable[10];
-        int i = 0;
-        for (Searchable s : searchableElements) {
-            if (s == null) {
-                throw new NullPointerException("Список объектов для поиска содержит Null");
-            }
-            if (s.getSearchTerm().contains(searchString)) {
-                searchResalt[i] = s;
-                i++;
-                if (i >= searchResalt.length) {
-                    break;
-                }
+    public List<Searchable> search(String searchString) {
+        List<Searchable> searchResalt = new ArrayList<>();
+        Iterator<Searchable> iterator = searchableElements.iterator();
+        if (searchableElements.isEmpty()) {
+            throw new NullPointerException("Список объектов для поиска содержит Null");
+        }
+        while (iterator.hasNext()){
+            Searchable s = iterator.next();
+            if(s.getSearchTerm().contains(searchString)){
+                searchResalt.add(s);
             }
         }
         return searchResalt;
     }
 
     public void add(Searchable searchElement) {
-        for (int i = 0; i < searchableElements.length; i++) {
-            if (searchableElements[i] == null) {
-                searchableElements[i] = searchElement;
-                break;
-            }
+        if(searchElement == null){
+            throw new NullPointerException("Элемент для поиска не может быть Null");
         }
+        searchableElements.add(searchElement);
     }
 
     public Searchable singleElementSearch(String searchString) throws BestResultNotFound {
