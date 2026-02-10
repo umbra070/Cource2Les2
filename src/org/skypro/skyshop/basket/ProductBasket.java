@@ -2,12 +2,16 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 
 public class ProductBasket {
     //Корзина
-    private Product[] basket = new Product[5];
+    //private Product[] basket = new Product[5];
+    List<Product> basket = new ArrayList<Product>();
 
     public ProductBasket() {
 
@@ -15,17 +19,7 @@ public class ProductBasket {
 
     //Добавляет продукт в корзину. Принимает Product, ни чего не возвращает.
     public void addProductToBasket(Product product) {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                basket[i] = product;
-                System.out.println(String.format("Товар %s добавлен в корзину", product.getProductName()));
-                break;
-            }
-            if (i == basket.length - 1 && basket[i] != null) {
-                System.out.println("Невозможно добавить продукт");
-                System.out.println(String.format("Не удалось добавить товар  %s в корзину", product.getProductName()));
-            }
-        }
+        basket.add(product);
     }
 
     //Возвращает общую стоимость товаров из корзины. Ни чего не принимает, возвращает boolean.
@@ -45,15 +39,15 @@ public class ProductBasket {
         int totalCoast = 0;
         int specialProductsCount = 0;
         boolean isBasketEmpty = true;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
+        for (int i = 0; i < basket.size(); i++) {
+            if (basket.get(i) == null) {
                 continue;
             }
-            if (basket[i].isSpecial()) {
+            if (basket.get(i).isSpecial()) {
                 specialProductsCount++;
             }
-            System.out.println(basket[i]);
-            totalCoast += basket[i].getProductPrice();
+            System.out.println(basket.get(i));
+            totalCoast += basket.get(i).getProductPrice();
             System.out.println(String.format("Специальных товаров в корзине: %d", specialProductsCount));
             isBasketEmpty = false;
         }
@@ -76,10 +70,28 @@ public class ProductBasket {
         return false;
     }
 
+    public List<Product> removeProductByName(String productName) {
+        List<Product> productsForRemove = new ArrayList<Product>();
+        Iterator<Product> iterator = basket.iterator();
+        while (iterator.hasNext()) {
+            Product p = iterator.next();
+            //System.out.println(p);
+            if (p.getProductName().equals(productName)) {
+                productsForRemove.add(p);
+                iterator.remove();
+            }
+        }
+//        for (Product p : basket) {
+//            if(p.getProductName().equals(productName)){
+//                productsForRemove.add(p);
+//                basket.remove(p);
+//            }
+//        }
+        return productsForRemove;
+    }
+
     //Очищает корзину. Ни чего не принимает и ни чего не возвращает.
     public void cleanBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
-        }
+        basket.clear();
     }
 }
