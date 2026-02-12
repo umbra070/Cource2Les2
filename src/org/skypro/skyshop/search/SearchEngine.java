@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class SearchEngine {
-    List<Searchable> searchableElements = new ArrayList<>();
+    private List<Searchable> searchableElements = new ArrayList<>();
 
     public SearchEngine() {
     }

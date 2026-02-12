@@ -2,16 +2,14 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class ProductBasket {
     //Корзина
     //private Product[] basket = new Product[5];
-    List<Product> basket = new ArrayList<Product>();
+    //private List<Product> basket = new ArrayList<Product>();
+    private Map<String, List<Product>> basket = new TreeMap<String, List<Product>>();
 
     public ProductBasket() {
 
