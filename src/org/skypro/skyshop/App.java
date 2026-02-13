@@ -99,7 +99,7 @@ public class App {
         basket.printBasket();
         removedProducts = basket.removeProductByName("Жареные гвозди");
         System.out.println(removedProducts.toString());
-        if(removedProducts.isEmpty()){
+        if (removedProducts.isEmpty()) {
             System.out.println("Список пуст");
         }
         basket.printBasket();
@@ -204,12 +204,12 @@ public class App {
         basket.addProductToBasket(product4);
         basket.printBasket();
         System.out.println(basket.getTotalBasketCoast());
-        System.out.println(String.format("Товар %s есть в корзине: %s", product4.getProductName(), basket.checkProductByName(product4.getProductName())));
-        System.out.println(String.format("Товар %s есть в корзине: %s", product6.getProductName(), basket.checkProductByName(product6.getProductName())));
+        System.out.println(String.format("Товар %s есть в корзине: %s", product4.getName(), basket.checkProductByName(product4.getName())));
+        System.out.println(String.format("Товар %s есть в корзине: %s", product6.getName(), basket.checkProductByName(product6.getName())));
         basket.cleanBasket();
         basket.printBasket();
         basket.getTotalBasketCoast();
-        System.out.println(String.format("Товар %s есть в корзине: %s", product4.getProductName(), basket.checkProductByName(product4.getProductName())));
+        System.out.println(String.format("Товар %s есть в корзине: %s", product4.getName(), basket.checkProductByName(product4.getName())));
         //***************************************
         System.out.println("\n\r******************* Testing search\n\r");
         Searchable[] searchItems = new Searchable[]{
@@ -242,7 +242,7 @@ public class App {
         for (Searchable s : searchItems) {
             search.add(s);
         }
-        for (Searchable s : search.search("Samsung")) {
+        for (Searchable s : search.search("Samsung").values()) {
             if (s == null) {
                 continue;
             }
@@ -251,7 +251,7 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 2\n\r");
-        for (Searchable s : search.search("Кабель")) {
+        for (Searchable s : search.search("Кабель").values()) {
             if (s == null) {
                 continue;
             }
@@ -260,7 +260,7 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 3\n\r");
-        for (Searchable s : search.search("890")) {
+        for (Searchable s : search.search("890").values()) {
             if (s == null) {
                 continue;
             }
@@ -270,7 +270,7 @@ public class App {
         }
         System.out.println("\n\rTesting search 4\n\r");
         try {
-            for (Searchable s : searchWithExceptions.search("жареные гвозди")) {
+            for (Searchable s : searchWithExceptions.search("жареные гвозди").values()) {
                 if (s == null) {
                     continue;
                 }

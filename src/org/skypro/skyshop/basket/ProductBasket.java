@@ -7,9 +7,7 @@ import java.util.*;
 
 public class ProductBasket {
     //Корзина
-    //private Product[] basket = new Product[5];
-    //private List<Product> basket = new ArrayList<Product>();
-    private Map<String, List<Product>> basket = new TreeMap<String, List<Product>>();
+    private Map<String, List<Product>> basket = new HashMap<String, List<Product>>();
 
     public ProductBasket() {
 
@@ -17,17 +15,22 @@ public class ProductBasket {
 
     //Добавляет продукт в корзину. Принимает Product, ни чего не возвращает.
     public void addProductToBasket(Product product) {
-        basket.add(product);
+        basket.computeIfAbsent(product.getName(), p -> new ArrayList<>()).add(product);
     }
 
     //Возвращает общую стоимость товаров из корзины. Ни чего не принимает, возвращает boolean.
     public int getTotalBasketCoast() {
         int totalCoast = 0;
-        for (Product p : basket) {
-            if (p == null) {
+        for (List<Product> lp : basket.values()) {
+            if (lp == null) {
                 continue;
             }
-            totalCoast += p.getProductPrice();
+            for (Product p : lp) {
+                if (p == null) {
+                    continue;
+                }
+                totalCoast += p.getProductPrice();
+            }
         }
         return totalCoast;
     }
@@ -37,54 +40,47 @@ public class ProductBasket {
         int totalCoast = 0;
         int specialProductsCount = 0;
         boolean isBasketEmpty = true;
-        for (int i = 0; i < basket.size(); i++) {
-            if (basket.get(i) == null) {
-                continue;
+        for (List<Product> lp : basket.values()) {
+            for (Product p : lp) {
+                if (p == null) {
+                    continue;
+                }
+                if (p.isSpecial()) {
+                    specialProductsCount++;
+                }
+                totalCoast += p.getProductPrice();
+                System.out.println(p);
+                isBasketEmpty = false;
             }
-            if (basket.get(i).isSpecial()) {
-                specialProductsCount++;
-            }
-            System.out.println(basket.get(i));
-            totalCoast += basket.get(i).getProductPrice();
-            System.out.println(String.format("Специальных товаров в корзине: %d", specialProductsCount));
-            isBasketEmpty = false;
         }
-        System.out.println(String.format("Итоговая стоимость: %d", totalCoast));
         if (isBasketEmpty) {
-            System.out.println("в корзине пусто");
+            System.out.println("В корзине пусто");
         }
+        System.out.println(String.format("Специальных товаров в корзине: %d", specialProductsCount));
+        System.out.println(String.format("Итоговая стоимость: %d", totalCoast));
     }
 
     //Проверяет наличие товара в корзине по его названию. Принимает значение String, возвращает boolean.
     public boolean checkProductByName(String productName) {
-        for (Product p : basket) {
-            if (p == null) {
+        for (Map.Entry<String, List<Product>> me : basket.entrySet()) {
+            if (me == null) {
                 continue;
             }
-            if (Objects.equals(p.getProductName(), productName)) {
+            if (Objects.equals(productName, me.getKey())) {
                 return true;
             }
         }
         return false;
     }
 
+    //Удаляет товары из корзины по названию. Принимает строку названия товара, возвращает список удаленных товаров
     public List<Product> removeProductByName(String productName) {
-        List<Product> productsForRemove = new ArrayList<Product>();
-        Iterator<Product> iterator = basket.iterator();
-        while (iterator.hasNext()) {
-            Product p = iterator.next();
-            //System.out.println(p);
-            if (p.getProductName().equals(productName)) {
-                productsForRemove.add(p);
-                iterator.remove();
-            }
+        System.out.println(productName);
+        List<Product> productsForRemove = new ArrayList<>();
+        if (basket.get(productName) != null) {
+            productsForRemove.addAll(basket.get(productName));
         }
-//        for (Product p : basket) {
-//            if(p.getProductName().equals(productName)){
-//                productsForRemove.add(p);
-//                basket.remove(p);
-//            }
-//        }
+        basket.remove(productName);
         return productsForRemove;
     }
 

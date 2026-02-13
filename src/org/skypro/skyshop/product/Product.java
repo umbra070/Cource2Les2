@@ -29,7 +29,8 @@ public abstract class Product implements Searchable {
 
     public abstract int getProductPrice();
 
-    public String getProductName() {
+    @Override
+    public String getName() {
         return productName;
     }
 }
