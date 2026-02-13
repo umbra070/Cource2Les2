@@ -1,26 +1,27 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
+import org.skypro.skyshop.search.comparator.ComparatorByNameLenth;
 
 import java.util.*;
 
 public class SearchEngine {
     //Набор данных, в котором будет производиться поиск
-    private Map<String, Searchable> searchableElements = new TreeMap<>();
+    private Set<Searchable> searchableElements = new HashSet<>();
 
     public SearchEngine() {
     }
 
     //Метод поиска вхождения поисковой строки в объект для поиска.
     // Принимает поисковую строку String и возвращает объект типа Map, содержащий результаты поиска
-    public Map<String, Searchable> search(String searchString) {
-        Map<String, Searchable> searchResalt = new TreeMap<>();
+    public Set<Searchable> search(String searchString) {
+        Set<Searchable> searchResalt = new TreeSet<>(new ComparatorByNameLenth());
         if (searchableElements.isEmpty()) {
             throw new NullPointerException("Список объектов для поиска содержит Null");
         }
-        for (Searchable s : searchableElements.values()) {
+        for (Searchable s : searchableElements) {
             if (s.getSearchTerm().contains(searchString)) {
-                searchResalt.put(s.getName(), s);
+                searchResalt.add(s);
             }
         }
         return searchResalt;
@@ -32,14 +33,14 @@ public class SearchEngine {
         if (searchElement == null) {
             throw new NullPointerException("Элемент для поиска не может быть Null");
         }
-        searchableElements.put(searchElement.getName(), searchElement);
+        searchableElements.add(searchElement);
     }
 
     //Метод для выдачи единственного найденного элемента. Принимает поисковую строку, возвращает Searchable объект
     public Searchable singleElementSearch(String searchString) throws BestResultNotFound {
         int countBest = 0;
         Searchable bestResult = null;
-        for (Searchable s : searchableElements.values()) {
+        for (Searchable s : searchableElements) {
             int index = 0;
             int indexOfSearchString;
             int countTemp = 0;

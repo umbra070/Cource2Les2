@@ -242,7 +242,7 @@ public class App {
         for (Searchable s : searchItems) {
             search.add(s);
         }
-        for (Searchable s : search.search("Samsung").values()) {
+        for (Searchable s : search.search("Samsung")) {
             if (s == null) {
                 continue;
             }
@@ -251,7 +251,7 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 2\n\r");
-        for (Searchable s : search.search("Кабель").values()) {
+        for (Searchable s : search.search("Кабель")) {
             if (s == null) {
                 continue;
             }
@@ -260,7 +260,7 @@ public class App {
             System.out.println("*******************");
         }
         System.out.println("\n\rTesting search 3\n\r");
-        for (Searchable s : search.search("890").values()) {
+        for (Searchable s : search.search("890")) {
             if (s == null) {
                 continue;
             }
@@ -270,7 +270,7 @@ public class App {
         }
         System.out.println("\n\rTesting search 4\n\r");
         try {
-            for (Searchable s : searchWithExceptions.search("жареные гвозди").values()) {
+            for (Searchable s : searchWithExceptions.search("жареные гвозди")) {
                 if (s == null) {
                     continue;
                 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class ProductBasket {
     //Корзина
-    private Map<String, List<Product>> basket = new HashMap<String, List<Product>>();
+    private Map<String, List<Product>> basket = new HashMap<>();
 
     public ProductBasket() {
 
@@ -76,12 +76,12 @@ public class ProductBasket {
     //Удаляет товары из корзины по названию. Принимает строку названия товара, возвращает список удаленных товаров
     public List<Product> removeProductByName(String productName) {
         System.out.println(productName);
-        List<Product> productsForRemove = new ArrayList<>();
-        if (basket.get(productName) != null) {
-            productsForRemove.addAll(basket.get(productName));
+        List<Product> productsForRemove = basket.remove(productName);
+        if (productsForRemove != null) {
+            return productsForRemove;
         }
         basket.remove(productName);
-        return productsForRemove;
+        return new ArrayList<>();
     }
 
     //Очищает корзину. Ни чего не принимает и ни чего не возвращает.

@@ -30,4 +30,17 @@ public class Article implements Searchable {
     public String getContentType() {
         return "ARTICLE";
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        return this.getName().equals(((Article) obj).getName());
+    }
 }
