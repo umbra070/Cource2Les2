@@ -1,17 +1,20 @@
 package org.skypro.skyshop.product;
 
 public class SimpleProduct extends Product {
-    private int productPrice;
+    private final int productPrice;
 
     public SimpleProduct(String productName, int productPrice) {
         super(productName);
+        if (productPrice <= 0) {
+            throw new IllegalArgumentException(String.format("Стоимость продукта %s должна быть строго больше нуля", productName));
+        }
         this.productPrice = productPrice;
 
     }
 
     @Override
     public String toString() {
-        return String.format("%s : %d", this.getProductName(), this.getProductPrice());
+        return String.format("%s : %d", this.getSearchTerm(), this.getProductPrice());
     }
 
     @Override
