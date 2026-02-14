@@ -1,11 +1,17 @@
 package org.skypro.skyshop.product;
 
 public class DiscountProduct extends Product {
-    private int productPrice;
-    private int discount;
+    private final int productPrice;
+    private final int discount;
 
     public DiscountProduct(String productName, int productPrice, int discount) {
         super(productName);
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException(String.format("Процент скидки продукта %s должен быть в диапазоне между 0 и 100", productName));
+        }
+        if (productPrice <= 0) {
+            throw new IllegalArgumentException(String.format("Стоимость продукта %s должна быть строго больше 0", productName));
+        }
         this.productPrice = productPrice;
         this.discount = discount;
     }
@@ -16,7 +22,7 @@ public class DiscountProduct extends Product {
 
     @Override
     public String toString() {
-        return String.format("%s : %d(%d%%)", this.getProductName(), this.getProductPrice(), this.getDiscount());
+        return String.format("%s : %d(%d%%)", this.getSearchTerm(), this.getProductPrice(), this.getDiscount());
     }
 
     @Override
@@ -28,5 +34,4 @@ public class DiscountProduct extends Product {
     public boolean isSpecial() {
         return true;
     }
-
 }
