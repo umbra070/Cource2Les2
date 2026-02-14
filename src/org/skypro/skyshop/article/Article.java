@@ -33,11 +33,14 @@ public class Article implements Searchable {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.getName().hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
+        if(obj == null){
+            return false;
+        }
         if (obj.getClass() != this.getClass()) {
             return false;
         }
