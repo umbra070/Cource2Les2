@@ -2,12 +2,14 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Objects;
+import java.util.*;
+
+import static java.lang.Integer.sum;
 
 
 public class ProductBasket {
     //Корзина
-    private Product[] basket = new Product[5];
+    private Map<String, List<Product>> basket = new HashMap<>();
 
     public ProductBasket() {
 
@@ -15,29 +17,15 @@ public class ProductBasket {
 
     //Добавляет продукт в корзину. Принимает Product, ни чего не возвращает.
     public void addProductToBasket(Product product) {
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                basket[i] = product;
-                System.out.println(String.format("Товар %s добавлен в корзину", product.getProductName()));
-                break;
-            }
-            if (i == basket.length - 1 && basket[i] != null) {
-                System.out.println("Невозможно добавить продукт");
-                System.out.println(String.format("Не удалось добавить товар  %s в корзину", product.getProductName()));
-            }
-        }
+        basket.computeIfAbsent(product.getName(), p -> new ArrayList<>()).add(product);
     }
 
     //Возвращает общую стоимость товаров из корзины. Ни чего не принимает, возвращает boolean.
     public int getTotalBasketCoast() {
-        int totalCoast = 0;
-        for (Product p : basket) {
-            if (p == null) {
-                continue;
-            }
-            totalCoast += p.getProductPrice();
-        }
-        return totalCoast;
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getProductPrice)
+                .sum();
     }
 
     //Выводит на экран список товаров из корзины с их стоимостью. Если корзина пуста, выводит соответствующее сообщение. Ни чего не принимает и не возвращает.
@@ -45,41 +33,52 @@ public class ProductBasket {
         int totalCoast = 0;
         int specialProductsCount = 0;
         boolean isBasketEmpty = true;
-        for (int i = 0; i < basket.length; i++) {
-            if (basket[i] == null) {
-                continue;
-            }
-            if (basket[i].isSpecial()) {
-                specialProductsCount++;
-            }
-            System.out.println(basket[i]);
-            totalCoast += basket[i].getProductPrice();
-            System.out.println(String.format("Специальных товаров в корзине: %d", specialProductsCount));
-            isBasketEmpty = false;
+        if(this.getTotalBasketCoast() == 0){
+            System.out.println("В корзине пусто");
         }
-        System.out.println(String.format("Итоговая стоимость: %d", totalCoast));
-        if (isBasketEmpty) {
-            System.out.println("в корзине пусто");
-        }
+        basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .forEach(System.out::println);
+        System.out.println(String.format("Специальных товаров в корзине: %d", getSpecialProductsCount()));
+        System.out.println(String.format("Итоговая стоимость: %d", getTotalBasketCoast()));
+    }
+
+    //
+    private long getSpecialProductsCount(){
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     //Проверяет наличие товара в корзине по его названию. Принимает значение String, возвращает boolean.
     public boolean checkProductByName(String productName) {
-        for (Product p : basket) {
-            if (p == null) {
+        for (Map.Entry<String, List<Product>> me : basket.entrySet()) {
+            if (me == null) {
                 continue;
             }
-            if (Objects.equals(p.getProductName(), productName)) {
+            if (Objects.equals(productName, me.getKey())) {
                 return true;
             }
         }
         return false;
     }
 
+    //Удаляет товары из корзины по названию. Принимает строку названия товара, возвращает список удаленных товаров
+    public List<Product> removeProductByName(String productName) {
+        System.out.println(productName);
+        List<Product> productsForRemove = basket.remove(productName);
+        if (productsForRemove != null) {
+            return productsForRemove;
+        }
+        basket.remove(productName);
+        return new ArrayList<>();
+    }
+
     //Очищает корзину. Ни чего не принимает и ни чего не возвращает.
     public void cleanBasket() {
-        for (int i = 0; i < basket.length; i++) {
-            basket[i] = null;
-        }
+        basket.clear();
     }
 }

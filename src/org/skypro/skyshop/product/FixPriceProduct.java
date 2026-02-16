@@ -9,7 +9,7 @@ public class FixPriceProduct extends Product {
 
     @Override
     public String toString() {
-        return String.format("%s : Фиксированная цена %d", this.getProductName(), this.getProductPrice());
+        return String.format("%s : Фиксированная цена %d", this.getName(), this.getProductPrice());
     }
 
     @Override
