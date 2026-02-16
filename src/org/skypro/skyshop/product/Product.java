@@ -33,12 +33,12 @@ public abstract class Product implements Searchable {
         if (obj.getClass() != this.getClass()) {
             return false;
         }
-        return this.getName().equals(((Product) obj).getName());
+        return this.productName.equals(((Product) obj).productName);
     }
 
     @Override
     public int hashCode() {
-        return this.getName().hashCode();
+        return this.productName.hashCode();
     }
 
     public abstract boolean isSpecial();

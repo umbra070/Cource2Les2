@@ -4,6 +4,7 @@ import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.search.comparator.ComparatorByNameLenth;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     //Набор данных, в котором будет производиться поиск
@@ -15,16 +16,12 @@ public class SearchEngine {
     //Метод поиска вхождения поисковой строки в объект для поиска.
     // Принимает поисковую строку String и возвращает объект типа Map, содержащий результаты поиска
     public Set<Searchable> search(String searchString) {
-        Set<Searchable> searchResalt = new TreeSet<>(new ComparatorByNameLenth());
         if (searchableElements.isEmpty()) {
             throw new NullPointerException("Список объектов для поиска содержит Null");
         }
-        for (Searchable s : searchableElements) {
-            if (s.getSearchTerm().contains(searchString)) {
-                searchResalt.add(s);
-            }
-        }
-        return searchResalt;
+        return searchableElements.stream()
+                .filter(s -> searchableElements.contains(s))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new ComparatorByNameLenth())));
     }
 
     //Добавляет данные в мапу, в которой будет производиться поиск.

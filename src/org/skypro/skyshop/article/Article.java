@@ -33,7 +33,7 @@ public class Article implements Searchable {
 
     @Override
     public int hashCode() {
-        return this.getName().hashCode();
+        return this.articleName.hashCode();
     }
 
     @Override
@@ -44,6 +44,6 @@ public class Article implements Searchable {
         if (obj.getClass() != this.getClass()) {
             return false;
         }
-        return this.getName().equals(((Article) obj).getName());
+        return this.articleName.equals(((Article) obj).articleName);
     }
 }

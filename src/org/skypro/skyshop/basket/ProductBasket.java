@@ -4,6 +4,8 @@ import org.skypro.skyshop.product.Product;
 
 import java.util.*;
 
+import static java.lang.Integer.sum;
+
 
 public class ProductBasket {
     //Корзина
@@ -20,19 +22,10 @@ public class ProductBasket {
 
     //Возвращает общую стоимость товаров из корзины. Ни чего не принимает, возвращает boolean.
     public int getTotalBasketCoast() {
-        int totalCoast = 0;
-        for (List<Product> lp : basket.values()) {
-            if (lp == null) {
-                continue;
-            }
-            for (Product p : lp) {
-                if (p == null) {
-                    continue;
-                }
-                totalCoast += p.getProductPrice();
-            }
-        }
-        return totalCoast;
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getProductPrice)
+                .sum();
     }
 
     //Выводит на экран список товаров из корзины с их стоимостью. Если корзина пуста, выводит соответствующее сообщение. Ни чего не принимает и не возвращает.
@@ -40,24 +33,24 @@ public class ProductBasket {
         int totalCoast = 0;
         int specialProductsCount = 0;
         boolean isBasketEmpty = true;
-        for (List<Product> lp : basket.values()) {
-            for (Product p : lp) {
-                if (p == null) {
-                    continue;
-                }
-                if (p.isSpecial()) {
-                    specialProductsCount++;
-                }
-                totalCoast += p.getProductPrice();
-                System.out.println(p);
-                isBasketEmpty = false;
-            }
-        }
-        if (isBasketEmpty) {
+        if(this.getTotalBasketCoast() == 0){
             System.out.println("В корзине пусто");
         }
-        System.out.println(String.format("Специальных товаров в корзине: %d", specialProductsCount));
-        System.out.println(String.format("Итоговая стоимость: %d", totalCoast));
+        basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .forEach(System.out::println);
+        System.out.println(String.format("Специальных товаров в корзине: %d", getSpecialProductsCount()));
+        System.out.println(String.format("Итоговая стоимость: %d", getTotalBasketCoast()));
+    }
+
+    //
+    private long getSpecialProductsCount(){
+        return basket.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     //Проверяет наличие товара в корзине по его названию. Принимает значение String, возвращает boolean.
